@@ -19,18 +19,16 @@ import jp.co.metateam.library.repository.BookMstRepository;
 public class BookMstService {
 
     private final BookMstRepository bookMstRepository;
-    
+
     @Autowired
-    public BookMstService(BookMstRepository bookMstRepository){
+    public BookMstService(BookMstRepository bookMstRepository) {
         this.bookMstRepository = bookMstRepository;
     }
-    
+
     public List<BookMstDto> findAvailableWithStockCount() {
         List<BookMst> books = this.bookMstRepository.findLimitedBook();
         List<BookMstDto> bookMstDtoList = new ArrayList<BookMstDto>();
 
-        // 書籍の在庫数を取得
-        // FIXME: 現状は書籍ID毎にDBに問い合わせている。一度のSQLで完了させたい。
         for (int i = 0; i < books.size(); i++) {
             BookMst book = books.get(i);
             BookMstDto bookMstDto = new BookMstDto();
@@ -39,11 +37,6 @@ public class BookMstService {
             bookMstDto.setTitle(book.getTitle());
             bookMstDtoList.add(bookMstDto);
         }
-
         return bookMstDtoList;
     }
-    
 }
-
-
-
