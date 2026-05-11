@@ -40,6 +40,7 @@ public class BookController {
         model.addAttribute("bookMstList", bookMstList);
 
         return "book/index";
+        //あああああ
     }
 
     @GetMapping("/book/add")
