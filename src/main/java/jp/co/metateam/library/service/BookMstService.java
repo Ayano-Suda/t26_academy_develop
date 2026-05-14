@@ -29,7 +29,6 @@ public class BookMstService {
     public List<BookMstDto> findAvailableWithStockCount() {
         List<BookMst> books = this.bookMstRepository.findLimitedBook();
         List<BookMstDto> bookMstDtoList = new ArrayList<BookMstDto>();
-
         // 書籍の在庫数を取得
         // FIXME: 現状は書籍ID毎にDBに問い合わせている。一度のSQLで完了させたい。
         for (int i = 0; i < books.size(); i++) {
@@ -45,15 +44,13 @@ public class BookMstService {
     }
 
     // 以下入力
-    @Transactional//この処理を1セットのDB処理として扱う。途中でエラーなら保存をすべてなかったことに
-    public void save(BookMstDto bookMstDto) { //puplicでコントローラーから呼べる。voidで戻り値なし、今回は保存のみなので画面へ帰す値は不要
-//saveは保存処理メソッド
-        BookMst book = new BookMst();//Controllerから受け取った画面入力データ（titleとisbn）
-       
-
-        book.setTitle(bookMstDto.getTitle());//画面入力をDB保存用Entityへ詰め替える
-        book.setIsbn(bookMstDto.getIsbn());//画面入力をDB保存用Entityへ詰め替える
-
-        this.bookMstRepository.save(book);//Repositoryへ保存依頼(JpaRepository継承)
+    @Transactional // この処理を1セットのDB処理として扱う。途中でエラーなら保存をすべてなかったことに（dbへは最後の最後の確定した段階で保存したい）
+    public void save(BookMstDto bookMstDto) { // puplicでコントローラーから呼べる。voidで戻り値なし、今回は保存のみなので画面へ帰す値は不要
+        // 以下dto型からdbへの変換
+        
+        BookMst book = new BookMst();// Controllerから受け取った画面入力データ（titleとisbn）
+        book.setTitle(bookMstDto.getTitle());// 画面入力をDB保存用Entityへ詰め替える
+        book.setIsbn(bookMstDto.getIsbn());// 画面入力をDB保存用Entityへ詰め替える。dbへの保存
+        this.bookMstRepository.save(book);// Repositoryへ保存依頼(JpaRepository継承)
     }
 }
