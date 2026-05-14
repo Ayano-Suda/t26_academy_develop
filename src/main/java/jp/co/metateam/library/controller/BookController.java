@@ -24,7 +24,7 @@ import lombok.extern.log4j.Log4j2;
  */
 @Log4j2 // ログ出力機能を使えるようにする
 @Controller // Springへこのクラスはコントローラー担当と伝え管理してもらう
-public class BookController {// BookControllerというファイルを作成
+public class BookController {// BookControllerというファイルを作成する
 
     private final BookMstService bookMstService;// BookMstServiceをこのControllerで使えるように保持する。final（＝変更不能）→途中で勝手に変わるのを防ぐ
 
@@ -61,8 +61,8 @@ public class BookController {// BookControllerというファイルを作成
         // @ModelAttributeは、画面入力をDTOへ自動で詰める
         // BookMstDto=入力データを入れる箱、BookMstDto型の変数名
         // 画面入力をBookMstDtoへ自動セットして受け取り、画面名(String)を返す
-        bookMstService.save(bookMstDto);//Serviceへ保存依頼
-        return "redirect:/book/index";//保存後に一覧画面へ移動
+        bookMstService.save(bookMstDto);// Serviceへ保存依頼
+        return "redirect:/book/index";// 保存後に一覧画面へ移動
 
     }
 
